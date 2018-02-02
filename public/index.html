@@ -1,28 +1,16 @@
 <html>
   <body>
-    <h3>Generic DNS Rebinding Attack Tool</h3>
-    <table>
-      <tr>
-        <td>
-          <input spellcheck='false' type='text' id='rebinddomain' style='width:350px'></input>
-        </td>
-        <td>
-    a domain provided in this format will first respond with the first ip for 3
-    seconds and after that with the second one. The domain can be accessed with $REBIND_DOMAIN within the script below
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <textarea spellcheck='false' id='script' style='width:600px;height: 200px;'></textarea>
-        </td>
-        <td>rebind.43z.one will respond with a html site that includes this javascript</td>
-      </tr>
-      <tr>
-      </tr>
-      
-    </table>
-    <br><br>
-    <button onclick='startAttack()'>Attack</button>
+    <noscript>tool needs javascript to work</noscript>
+    <h3>DNS Rebinding Attack Tool</h3>
+
+    $REBIND_DOMAIN = <input spellcheck='false' type='text' id='rebinddomain' style='width:350px'></input>
+    <br>
+    <br>
+    <textarea spellcheck='false' id='script' style='width:600px;height: 300px;'></textarea>
+    <br>
+    <br>
+    <button onclick='setupIframe()'>Attack</button> (script will be executed on the rebind domain in the iframe below)
+    <br>
     <br>
     <iframe id='iframe'></iframe>
   </body>
