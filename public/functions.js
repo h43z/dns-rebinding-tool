@@ -8,7 +8,7 @@ var timer = setInterval(function(){
 
   if(xhr.status != 404){
     clearInterval(timer)
-    alert(xhr.responseText)
+    document.body.innerHTML = xhr.responseText
   }
 
 }, 10)

