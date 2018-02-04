@@ -154,6 +154,8 @@ var interval = setInterval(function(){
 | 400|200|83|
 | 1000|100|103|
 
+I started a new repo just to explore this [dns cache eviction tester](https://github.com/h43z/dns-cache-eviction)
+
 Putting it all together and test it.
 ```bash
 echo -e "HTTP/1.1 200 OK\n\n TOPSECRET" | sudo nc -lvp 80 -q1 127.0.0.1
