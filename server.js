@@ -70,6 +70,6 @@ app.get('/attack', (req, res) => {
   `)
 })
 
-app.listen(httpPort, () => {
+app.listen(httpPort,'127.0.0.1', () => {
   console.log(`HTTP server is listening on ${httpPort}`)
 })
