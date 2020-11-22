@@ -5,7 +5,7 @@ const express = require('express')
 const app = express()
 app.use(express.static('public'))
 
-const dns = require('node-named')
+const dns = require('named')
 const dnsPort = 53
 
 const dnsServer = dns.createServer()
