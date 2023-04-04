@@ -64,7 +64,7 @@ app.get('/attack', (req, res) => {
       <script>
         setTimeout(function(){
           ${script} 
-        }, 3000)
+        }, 100)
       </script>
     </html>
   `)
