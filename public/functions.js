@@ -29,6 +29,7 @@ function setupIframe(){
 
 function createLink(){
   var rebind_domain = document.getElementById('rebinddomain').value
+  var script = document.getElementById('script').value.replace(new RegExp(/\$REBIND_DOMAIN/, 'g'),`"${rebind_domain}"` )
   attackurl.value = `//${rebind_domain}/attack?script=${btoa(script)}`
 }
 
