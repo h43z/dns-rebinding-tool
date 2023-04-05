@@ -7,12 +7,13 @@
     $REBIND_DOMAIN = <input spellcheck='false' type='text' id='rebinddomain' style='width:350px'></input>
     <br>
     <br>
-    <textarea spellcheck='false' id='script' style='width:600px;height: 300px;'></textarea>
+    <textarea oninput='createLink()' spellcheck='false' id='script' style='width:600px;height: 300px;'></textarea>
     <br>
     <br>
     <button onclick='setupIframe()'>Attack</button> (script will be executed on the rebind domain in the iframe below)
     <br>
     <br>
+    <input type=text id=attackurl></input>
     <iframe id='iframe'></iframe>
   </body>
 
