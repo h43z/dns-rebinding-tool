@@ -28,5 +28,8 @@ function setupIframe(){
 }
 
 function createLink(){
+  var rebind_domain = document.getElementById('rebinddomain').value
   attackurl.value = `//${rebind_domain}/attack?script=${btoa(script)}`
 }
+
+createLink()
